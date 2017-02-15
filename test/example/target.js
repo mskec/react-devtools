@@ -17,6 +17,17 @@ var ReactDOM = require('react-dom');
 var assign = require('object-assign');
 var guid = require('../../utils/guid');
 
+class DeepNode extends React.Component {
+  render() {
+    const depth = this.props.depth;
+    if (depth >= 50) {
+      return <div>DeepNode at: {depth}</div>;
+    }
+
+    return <DeepNode depth={depth + 1} />;
+  }
+}
+
 class Todos extends React.Component {
   constructor(props) {
     super(props);
@@ -95,6 +106,7 @@ class Todos extends React.Component {
           onToggleComplete={this.toggleComplete.bind(this)}
         />
         <Filter onSort={this.sort.bind(this)} onFilter={this.changeFilter.bind(this)} filter={this.state.filter} />
+        <DeepNode depth={0} />
       </div>
     );
   }
